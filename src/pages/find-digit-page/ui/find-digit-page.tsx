@@ -38,6 +38,7 @@ export const FindDigitPage: React.FC = () => {
       };
 
       const audio = new Audio("/sounds/success-sound.mp3");
+      audio.volume = 1;
       audio.play();
 
       const dialogId = dialogs.openDialog({
@@ -55,6 +56,7 @@ export const FindDigitPage: React.FC = () => {
       });
     } else {
       const audio = new Audio("/sounds/error-sound.mp3");
+      audio.volume = 1;
       audio.play();
 
       const dialogId = dialogs.openDialog({
