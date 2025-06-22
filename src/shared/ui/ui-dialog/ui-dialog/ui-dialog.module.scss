@@ -1,0 +1,56 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 2rem 4rem;
+
+  background: rgb(0 0 0 / 50%);
+  backdrop-filter: blur(0.125rem);
+}
+
+.dialog {
+  animation: spinIn 0.3s ease forwards;
+}
+
+.header {
+  display: flex;
+  margin-bottom: 1rem;
+}
+
+.close_btn {
+  display: inline-flex;
+  align-items: center;
+  align-self: start;
+  justify-content: center;
+
+  margin-inline-start: auto;
+  padding: 0.15rem;
+
+  svg {
+    width: 2rem;
+    height: 2rem;
+    fill: var(--color);
+  }
+}
+
+.content {
+  overflow-y: auto;
+  min-width: 18.75rem;
+  max-height: calc(100dvh - 11rem);
+}
+
+@keyframes spinIn {
+  from {
+    transform: scale(0.1) rotate(180deg);
+    opacity: 0;
+  }
+
+  to {
+    transform: scale(1) rotate(360deg);
+    opacity: 1;
+  }
+}
