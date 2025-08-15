@@ -60,6 +60,7 @@ export const FindDigitPage: React.FC = () => {
     }
   };
   const speakerButtonRef = useRef<HTMLButtonElement | null>(null);
+
   useEffect(() => {
     delay(300).then(() => {
       if (speakerButtonRef.current !== null) {

@@ -18,10 +18,11 @@ export const SayDigitPage = () => {
     value: getRandomDigit(),
     rotation: getRandomRotation(),
   }));
-
+  const [saidText, setSaidText] = useState<string | null>(null);
   const dialogs = useDialogs();
 
   const handleSpeechResult = (voiceText: string) => {
+    setSaidText(voiceText);
     const normalizedDigit = normalizeDigit(voiceText);
     const isSuccess = normalizedDigit === targetDigit.value;
 
@@ -72,13 +73,16 @@ export const SayDigitPage = () => {
 
     startListening();
   };
+
   return (
     <UiFlexColumn className={s.root}>
+      <input type="voice" />
       <UiFlexRow>
         <div className="mb-10 max-w-max">
           <GoHomeButton />
         </div>
       </UiFlexRow>
+      <UiFlexColumn align={"center"}>{JSON.stringify(saidText)}</UiFlexColumn>
       <UiFlexColumn justify={"space-evenly"} align={"center"} className={s.main}>
         <DigitCard
           className={s.digit_card}

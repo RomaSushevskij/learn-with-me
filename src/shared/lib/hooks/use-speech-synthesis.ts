@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { delay } from "@/shared/lib/delay";
 
 export const useSpeechSynthesis = (params?: { delayMs: number }) => {
@@ -24,10 +24,18 @@ export const useSpeechSynthesis = (params?: { delayMs: number }) => {
     [delayMs],
   );
 
-  const stop = useCallback(() => {
+  const stopSpeak = useCallback(() => {
     speechSynthesis.cancel();
     setIsSpeaking(false);
   }, []);
 
-  return { speak, stop, isSpeaking };
+  useEffect(() => {
+    return () => {
+      if (isSpeaking) {
+        stopSpeak();
+      }
+    };
+  }, [isSpeaking, stopSpeak]);
+
+  return { speak, stopSpeak, isSpeaking };
 };
