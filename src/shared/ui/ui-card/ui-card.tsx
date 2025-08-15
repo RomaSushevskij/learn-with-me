@@ -1,20 +1,37 @@
 import type { DetailedHTMLProps, FC, HTMLAttributes } from "react";
+import clsx from "clsx";
 
-type UiCardProps = DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> & {
+import s from "./ui-card.module.scss";
+
+type UiCardProps = Omit<
+  DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>,
+  "onClick"
+> & {
   value: string | number;
   color?: string;
+  onClick?: (value: string | number) => void;
 };
 
-export const UiCard: FC<UiCardProps> = ({ value, color = "#FFEC99", style, ...props }) => {
+export const UiCard: FC<UiCardProps> = ({
+  value,
+  color = "#FFEC99",
+  style,
+  className,
+  onClick,
+  ...props
+}) => {
+  const handleClick = () => {
+    onClick?.(value);
+  };
+
   return (
     <div
-      className="py-1 sm:p-4 aspect-video rounded-2xl shadow-xl flex
-      items-center justify-center cursor-pointer select-none transition
-      transform active:scale-80"
+      className={clsx(className, s.root)}
       style={{
         backgroundColor: color,
         ...style,
       }}
+      onClick={handleClick}
       {...props}
     >
       <span className="text-7xl font-extrabold text-white drop-shadow-sm">{value}</span>

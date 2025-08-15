@@ -1,0 +1,27 @@
+.root {
+  cursor: pointer;
+  user-select: none;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  aspect-ratio: 16 / 9;
+  padding-block: 0.25rem;
+  border: 2px solid #fff;
+  border-radius: 0.75rem;
+
+  box-shadow:
+    0 0.625rem 0.9375rem -0.1875rem rgb(0 0 0 / 10%),
+    0 4px 6px -2px rgb(0 0 0 / 5%);
+
+  transition: transform 0.2s ease;
+
+  &:active {
+    transform: scale(0.8);
+  }
+
+  @media (width >= 40rem) {
+    padding: 1rem;
+  }
+}

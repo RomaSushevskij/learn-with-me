@@ -1,18 +1,27 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 
 import { shuffleArray } from "@/shared/lib/shuffle-array";
+import type { DigitType } from "@/entities/digits";
+import { getRandomRotation } from "@/shared/lib/get-random-rotation";
 
 import { DigitCard } from "./digit-card";
-import type { DigitType } from "@/entities/digits";
 
-const digits = shuffleArray<DigitType>(Array.from({ length: 10 }, (_, i) => (i + 1) as DigitType));
+const generateDigits = () => {
+  return shuffleArray<DigitType>(Array.from({ length: 10 }, (_, i) => (i + 1) as DigitType));
+};
 
-function getRandomRotation() {
-  return Math.floor(Math.random() * 15) - 5;
-}
+export const DigitsGrid = ({
+  onCardClick,
+  selectedDigit,
+  selectedDigitCardClassName,
+}: {
+  onCardClick?: (digit: DigitType) => void;
+  selectedDigit?: DigitType;
+  selectedDigitCardClassName?: string;
+}) => {
+  const [digits] = useState<DigitType[]>(generateDigits);
 
-export const DigitsGrid = ({ onCardClick }: { onCardClick?: (digit: DigitType) => void }) => {
-  const rotations = useMemo(() => digits.map(() => getRandomRotation()), []);
+  const rotations = useMemo(() => digits.map(() => getRandomRotation()), [digits]);
 
   const cardElements = digits.map((digit, index) => (
     <DigitCard
@@ -20,6 +29,7 @@ export const DigitsGrid = ({ onCardClick }: { onCardClick?: (digit: DigitType) =
       digit={digit}
       style={{ transform: `rotate(${rotations[index]}deg)` }}
       onClick={() => onCardClick?.(digit)}
+      className={selectedDigit === digit ? selectedDigitCardClassName : ""}
     />
   ));
 

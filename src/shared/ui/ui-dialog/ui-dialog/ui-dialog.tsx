@@ -118,7 +118,7 @@ export const UiDialog = ({
         rounded-2xl
         shadow-2xl
         transition-transform transition-opacity duration-300 ease`,
-            dialogClassName ? dialogClassName : "bg-yellow-50",
+            dialogClassName ? dialogClassName : "bg-purple-200",
             s.dialog,
           )}
           ref={dialogRef}

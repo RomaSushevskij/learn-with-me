@@ -2,11 +2,13 @@ import type { RouteProps } from "react-router-dom";
 import { MainPage } from "@/pages/main-page";
 import { LearnDigitsPage } from "@/pages/learn-digits-page/ui/learn-digits-page";
 import { FindDigitPage } from "@/pages/find-digit-page";
+import { SayDigitPage } from "@/pages/say-digit-page";
 
 enum AppRoutes {
   MAIN = "main",
   LEARN_DIGITS = "learnDigits",
   FIND_DIGIT = "findDigit",
+  SAY_DIGIT = "sayDigit",
   NOT_FOUND = "notFound",
 }
 
@@ -21,6 +23,7 @@ export const routePath: TRoutePath = {
   [AppRoutes.MAIN]: "/",
   [AppRoutes.LEARN_DIGITS]: "/learn-digits",
   [AppRoutes.FIND_DIGIT]: "/find-digit",
+  [AppRoutes.SAY_DIGIT]: "/say-digit",
   [AppRoutes.NOT_FOUND]: "*",
 
   getPath: (route, params) => {
@@ -40,6 +43,10 @@ export const routeConfig: Record<AppRoutes, RouteProps> = {
   [AppRoutes.FIND_DIGIT]: {
     path: routePath.findDigit,
     element: <FindDigitPage />,
+  },
+  [AppRoutes.SAY_DIGIT]: {
+    path: routePath.sayDigit,
+    element: <SayDigitPage />,
   },
   [AppRoutes.NOT_FOUND]: {
     path: routePath.notFound,

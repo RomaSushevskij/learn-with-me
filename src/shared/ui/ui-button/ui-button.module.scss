@@ -7,7 +7,7 @@
 
   display: inline-block;
 
-  padding: 16px 21px;
+  padding: 1rem 1.3125rem;
   border: 0;
   border-radius: 56px;
 
@@ -19,7 +19,7 @@
     Ubuntu,
     "Helvetica Neue",
     sans-serif;
-  font-size: 18px;
+  font-size: 1.125rem;
   font-weight: 600;
   color: #fff;
   text-align: center;
@@ -35,16 +35,30 @@
 
     position: absolute;
     top: 0;
-    left: 4%;
+    left: 50%;
+    transform: translateX(-50%);
 
     width: 92%;
     height: 50%;
-    border-radius: 125px;
+    border-radius: 7.8125rem;
 
     opacity: 0.5;
     background-color: initial;
     background-image: linear-gradient(#fff 0, rgb(255 255 255 / 0%) 100%);
 
     transition: all 0.3s;
+  }
+}
+
+.with_icon {
+  padding-block: 0.65rem;
+
+  &::before {
+    width: 75%;
+  }
+
+  svg {
+    width: 2rem;
+    height: 2rem;
   }
 }

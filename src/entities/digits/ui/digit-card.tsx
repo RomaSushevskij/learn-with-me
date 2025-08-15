@@ -4,12 +4,20 @@ import { digitColors } from "../lib/digit-colors";
 import { UiCard } from "@/shared/ui/ui-card/ui-card";
 import type { DigitType } from "@/entities/digits";
 
-type DigitCardProps = DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> & {
+type DigitCardProps = Omit<
+  DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>,
+  "onClick"
+> & {
   digit: DigitType;
+  onClick?: (digit: DigitType) => void;
 };
 
-export const DigitCard: React.FC<DigitCardProps> = ({ digit, ...props }) => {
+export const DigitCard: React.FC<DigitCardProps> = ({ digit, onClick, ...props }) => {
   const color = digitColors[digit];
 
-  return <UiCard value={digit} color={color} {...props} />;
+  const handleClick = (value: string | number) => {
+    onClick?.(value as DigitType);
+  };
+
+  return <UiCard value={digit} color={color} onClick={handleClick} {...props} />;
 };
