@@ -130,10 +130,7 @@ export function useVoskRu({
     });
 
     return () => {
-      recognizerRef.current?.remove();
       recognizerRef.current?.removeEventListener("result", handleResult);
-      recognizerRef.current = null;
-      micStream.current = null;
     };
   }, [modelPath, startRecognitionStream, handleResult]);
 
