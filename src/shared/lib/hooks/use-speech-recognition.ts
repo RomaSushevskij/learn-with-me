@@ -1,6 +1,9 @@
 import { useEffect, useState, useRef, useCallback } from "react";
 
 export const useSpeechRecognition = (args?: {
+  continuous?: boolean;
+  interimResults?: boolean;
+  lang?: string;
   onError?: () => void;
   onResult?: (text: string) => void;
 }) => {
@@ -8,7 +11,6 @@ export const useSpeechRecognition = (args?: {
   const [isListening, setIsListening] = useState<boolean>(false);
 
   const speechRecognition = useRef<SpeechRecognition | null>(null);
-  // const isResultHandled = useRef(false);
 
   const startListening = () => {
     if (!speechRecognition.current) return;
@@ -28,19 +30,12 @@ export const useSpeechRecognition = (args?: {
   const handleResult = useCallback(
     (event: SpeechRecognitionEvent) => {
       if (!speechRecognition.current) return;
-      // if (isResultHandled.current) return;
-
-      // isResultHandled.current = true;
 
       const voiceText = event.results[0][0].transcript;
       setText(voiceText);
       args?.onResult?.(voiceText);
       speechRecognition.current.stop();
       setIsListening(false);
-
-      // setTimeout(() => {
-      //   isResultHandled.current = false;
-      // }, 500);
     },
     [args],
   );
@@ -67,11 +62,15 @@ export const useSpeechRecognition = (args?: {
   useEffect(() => {
     if ("webkitSpeechRecognition" in window) {
       speechRecognition.current = new webkitSpeechRecognition();
-      speechRecognition.current.continuous = true;
-      speechRecognition.current.interimResults = false;
-      speechRecognition.current.lang = "ru-RU";
     }
   }, []);
+
+  useEffect(() => {
+    if (!speechRecognition.current) return;
+    speechRecognition.current.continuous = args?.continuous ?? true;
+    speechRecognition.current.interimResults = args?.interimResults ?? false;
+    speechRecognition.current.lang = args?.lang ?? "ru-RU";
+  }, [args]);
 
   useEffect(() => {
     if (!speechRecognition.current) return;
