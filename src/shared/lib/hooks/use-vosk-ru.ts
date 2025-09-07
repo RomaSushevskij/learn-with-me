@@ -42,6 +42,7 @@ export function useVoskRu({
   const audioStreamer = useRef<AudioStreamer | undefined>(undefined);
   const mediaStreamRef = useRef<MediaStream | null>(null);
   const [isListening, setIsListening] = useState(false);
+  const [isModelInitialized, setModelInitialized] = useState(false);
   const [utterance, setUtterance] = useState<TVoskResult | null>(null);
 
   const startRecognitionStream = useCallback(async () => {
@@ -127,6 +128,7 @@ export function useVoskRu({
 
     init().then(() => {
       console.log({ modelRef });
+      setModelInitialized(true);
     });
 
     return () => {
@@ -161,5 +163,11 @@ export function useVoskRu({
     };
   }, []);
 
-  return { connectToRecognizer, disconnectFromRecognizer, utterance, isListening };
+  return {
+    connectToRecognizer,
+    disconnectFromRecognizer,
+    utterance,
+    isListening,
+    isModelInitialized,
+  };
 }

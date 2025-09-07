@@ -10,6 +10,7 @@ import { UiSuccessDialog } from "@/shared/ui/ui-success-dialog";
 import { Sounds } from "@/shared/lib/Sounds";
 import { UiErrorDialog } from "@/shared/ui/ui-error-dialog";
 import { type TVoskResultHandler, useVoskRu } from "@/shared/lib/hooks/use-vosk-ru";
+import { UiPageLoader } from "@/shared/ui/ui-page-loader";
 
 import s from "./say-digit-page.module.scss";
 import { MODEL_PATH } from "../constants/model-path";
@@ -64,7 +65,13 @@ export const SayDigitPage = () => {
     [targetDigit, dialogs],
   );
 
-  const { connectToRecognizer, disconnectFromRecognizer, utterance, isListening } = useVoskRu({
+  const {
+    connectToRecognizer,
+    disconnectFromRecognizer,
+    utterance,
+    isListening,
+    isModelInitialized,
+  } = useVoskRu({
     modelPath: MODEL_PATH,
     onResult: handleSpeechResult,
   });
@@ -79,6 +86,25 @@ export const SayDigitPage = () => {
     connectToRecognizer();
   };
 
+  const pageContent = (
+    <UiFlexColumn marginTop={"20"} align={"center"} className={s.main}>
+      <DigitCard
+        className={s.digit_card}
+        digit={targetDigit.value}
+        style={{ transform: `rotate(${targetDigit.rotation}deg)` }}
+      />
+      <div className="mt-24">
+        <UiMicrophoneButton isActive={isListening} onClick={handleMicrophoneButtonClick} />
+      </div>
+      {utterance && (
+        <div className="mt-16 px-4 py-2 bg-red-100 border border-red-300 rounded-lg text-red-800 text-center flex gap-4 items-center justify-center gap-2">
+          <span className="text-xl">❌</span>
+          <span>Вы сказали: «{utterance.text}»</span>
+        </div>
+      )}
+    </UiFlexColumn>
+  );
+
   return (
     <UiFlexColumn className={s.root}>
       <UiFlexRow>
@@ -86,22 +112,8 @@ export const SayDigitPage = () => {
           <GoHomeButton />
         </div>
       </UiFlexRow>
-      <UiFlexColumn marginTop={"20"} align={"center"} className={s.main}>
-        <DigitCard
-          className={s.digit_card}
-          digit={targetDigit.value}
-          style={{ transform: `rotate(${targetDigit.rotation}deg)` }}
-        />
-        <div className="mt-24">
-          <UiMicrophoneButton isActive={isListening} onClick={handleMicrophoneButtonClick} />
-        </div>
-        {utterance && (
-          <div className="mt-16 px-4 py-2 bg-red-100 border border-red-300 rounded-lg text-red-800 text-center flex gap-4 items-center justify-center gap-2">
-            <span className="text-xl">❌</span>
-            <span>Вы сказали: «{utterance.text}»</span>
-          </div>
-        )}
-      </UiFlexColumn>
+
+      {isModelInitialized ? pageContent : <UiPageLoader className="mt-10" />}
     </UiFlexColumn>
   );
 };

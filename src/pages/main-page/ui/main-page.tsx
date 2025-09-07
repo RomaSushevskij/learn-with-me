@@ -8,7 +8,7 @@ export const MainPage = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="flex flex-col gap-y-4 h-dvh">
+    <div className="flex flex-col gap-y-4 h-dvh items-center">
       <div className={s.logo} />
       <div className={s.menu}>
         <UiButton onClick={() => navigate(routePath.learnDigits)}>Учить цифры</UiButton>

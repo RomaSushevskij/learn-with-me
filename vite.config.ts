@@ -18,8 +18,8 @@ export default defineConfig({
       manifest: {
         name: "Learn With Me",
         short_name: "Learn With Me",
-        theme_color: "#de9cff",
-        background_color: "#DC9AFE",
+        theme_color: "#7E96FF",
+        background_color: "#7E96FF",
         display: "standalone",
         icons: [
           {
