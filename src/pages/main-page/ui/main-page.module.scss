@@ -1,20 +1,11 @@
 .logo {
-  // transform:translateX(5%);
-  //
-  // aspect-ratio: 16/12;
-  // width: 100%;
-  //
-  // background-image: url("public/images/logo.png");
-  // background-repeat: no-repeat;
-  // background-position: center;
-  // background-size: contain;
   transform: translateX(5%);
 
   aspect-ratio: 16/12;
   width: 100%;
   max-width: 500px;   /* ограничение ширины */
 
-  background-image: url("/images/logo.png");
+  background-image: url("/public/images/logo.png");
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
