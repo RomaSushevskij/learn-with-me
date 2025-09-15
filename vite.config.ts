@@ -80,6 +80,16 @@ export default defineConfig({
               },
             },
           },
+          {
+            urlPattern: /\.(?:png|jpg|jpeg|svg|gif|mp3)$/,
+            handler: "CacheFirst",
+            options: {
+              cacheName: "static-assets",
+              expiration: {
+                maxAgeSeconds: 60 * 60 * 24 * 30,
+              },
+            },
+          },
         ],
       },
     }),
