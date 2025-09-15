@@ -37,13 +37,47 @@ export default defineConfig({
         ],
       },
       workbox: {
-        maximumFileSizeToCacheInBytes: 50 * 1024 * 1024, // 50 MB
+        maximumFileSizeToCacheInBytes: 100 * 1024 * 1024, // 100 MB
+        // runtimeCaching: [
+        //   // Кэширование модели Vosk
+        //   {
+        //     urlPattern: /^\/models\/.*$/,
+        //     handler: "CacheFirst",
+        //     options: {
+        //       cacheName: "models-cache",
+        //       expiration: {
+        //         maxEntries: 2000, // запас на все файлы модели
+        //         maxAgeSeconds: 60 * 60 * 24 * 30, // месяц
+        //       },
+        //     },
+        //   },
+        //   // Статические ассеты (картинки, mp3 и т.д.)
+        //   {
+        //     urlPattern: /\.(?:png|jpg|jpeg|svg|gif|mp3)$/,
+        //     handler: "CacheFirst",
+        //     options: {
+        //       cacheName: "static-assets",
+        //       expiration: {
+        //         maxEntries: 500,
+        //         maxAgeSeconds: 60 * 60 * 24 * 30, // месяц
+        //       },
+        //     },
+        //   },
+        // ],
+        globPatterns: [
+          "**/*", // закэширует все файлы из dist, включая вложенные папки
+        ],
+        globDirectory: "dist", // указывает директорию для поиска файлов
         runtimeCaching: [
           {
-            urlPattern: /\/models\/vosk-ru-0\.22\.zip$/, // путь к модели
-            handler: "CacheFirst", // сначала берём из кэша, если есть
+            urlPattern: /^\/.*$/, // на случай динамических запросов
+            handler: "CacheFirst",
             options: {
-              cacheName: "vosk-model-cache",
+              cacheName: "runtime-cache",
+              expiration: {
+                maxEntries: 2000,
+                maxAgeSeconds: 60 * 60 * 24 * 30,
+              },
             },
           },
         ],

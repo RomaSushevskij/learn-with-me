@@ -34,7 +34,7 @@
     content: "";
 
     position: absolute;
-    top: 0;
+    top:0.0625rem;
     left: 50%;
     transform: translateX(-50%);
 
@@ -54,7 +54,7 @@
   padding-block: 0.65rem;
 
   &::before {
-    width: 75%;
+    width: 70%;
   }
 
   svg {
