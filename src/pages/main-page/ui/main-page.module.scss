@@ -3,13 +3,13 @@
 
   aspect-ratio: 16/12;
   width: 100%;
-  max-width: 500px;   /* ограничение ширины */
+  max-width: 500px; /* ограничение ширины */
 
   background-image: url("/public/images/logo.png");
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
-  }
+}
 
 .menu {
   display: flex;

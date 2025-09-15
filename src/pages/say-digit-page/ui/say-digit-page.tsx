@@ -17,7 +17,8 @@ import { MODEL_PATH } from "../constants/model-path";
 
 export const SayDigitPage = () => {
   const [targetDigit, setTargetDigit] = useState<{ value: DigitType; rotation: number }>(() => ({
-    value: getRandomDigit(),
+    // value: getRandomDigit(),
+    value: 8,
     rotation: getRandomRotation(),
   }));
 
@@ -26,6 +27,7 @@ export const SayDigitPage = () => {
   const handleSpeechResult = useCallback<TVoskResultHandler>(
     ({ text, setUtterance }) => {
       const normalizedDigit = normalizeDigit(text);
+      console.log({ normalizedDigit });
       const isSuccess = normalizedDigit === targetDigit.value;
 
       if (isSuccess) {

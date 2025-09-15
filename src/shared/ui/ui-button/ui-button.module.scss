@@ -38,7 +38,7 @@
     left: 50%;
     transform: translateX(-50%);
 
-    width: 92%;
+    width: calc(100% - 1.5rem);
     height: 50%;
     border-radius: 7.8125rem;
 
@@ -54,7 +54,7 @@
   padding-block: 0.65rem;
 
   &::before {
-    width: 75%;
+    // width: 75%;
   }
 
   svg {
