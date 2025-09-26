@@ -3,3 +3,10 @@
     padding: 0;
   }
 }
+
+.container {
+  @media (width >= 40rem) {
+    width: 600px;
+    margin-inline: auto;
+  }
+}

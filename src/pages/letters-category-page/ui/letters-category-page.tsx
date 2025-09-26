@@ -17,7 +17,7 @@ export const LettersCategoryPage = () => {
   const pageTitle = location.state?.pageTitle;
 
   return (
-    <NavigationLayout showGoBackButton showGoHomeButton>
+    <NavigationLayout showGoBackButton showGoHomeButton className={s.container}>
       <UiFlex justify={"center"} className="w-full grow-1">
         <section className="flex flex-col w-full self-center max-w-80 grow-1">
           <h1 className="text-center mb-10 text-3xl">{pageTitle}</h1>

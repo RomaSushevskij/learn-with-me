@@ -10,7 +10,7 @@ export const DigitsPage = () => {
   const navigate = useNavigate();
 
   return (
-    <NavigationLayout showGoBackButton>
+    <NavigationLayout showGoBackButton className={s.container}>
       <div className={s.menu}>
         <UiButton onClick={() => navigate(routePath.learnDigits)}>Учить цифры</UiButton>
         <UiButton onClick={() => navigate(routePath.findDigit)}>Найди цифру</UiButton>

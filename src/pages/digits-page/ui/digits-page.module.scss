@@ -8,3 +8,10 @@
 
   width: 18.75rem;
 }
+
+.container {
+  @media (width >= 40rem) {
+    width: 600px;
+    margin-inline: auto;
+  }
+}

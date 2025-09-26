@@ -17,7 +17,7 @@ export const LettersPage = () => {
     };
 
   return (
-    <NavigationLayout showGoBackButton>
+    <NavigationLayout showGoBackButton className={s.container}>
       <div className={s.menu}>
         <UiButton
           onClick={handleLearnClick({
