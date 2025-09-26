@@ -8,6 +8,7 @@ export type TDialogsContext = {
     showCloseButton?: boolean;
     onClose?: () => void;
     dialogClassName?: string;
+    contentClassName?: string;
   }) => string;
   closeDialog: (id: string) => void;
   confirm: (data: {

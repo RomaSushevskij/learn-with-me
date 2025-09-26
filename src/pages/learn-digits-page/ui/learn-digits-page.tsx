@@ -1,44 +1,37 @@
-import { useState } from "react";
-
-import { DigitsGrid, type DigitType } from "@/entities/digits";
-import { GoHomeButton } from "@/features/go-home-button";
-import { useSpeechSynthesis } from "@/shared/lib/hooks/use-speech-synthesis";
-
+import {
+  DigitCard,
+  DigitsGrid,
+  DigitsPageContainer,
+  type DigitType,
+  useDigitPlayer,
+} from "@/entities/digits";
+import { GoBackButton } from "@/features/go-back-button";
+import { useDialogs } from "@/shared/ui/ui-dialog";
 import s from "./learn-digits-page.module.scss";
-
-type TSelectedDigit = {
-  value: DigitType | undefined;
-  className: string;
-};
-
-const initSelectedDigit: TSelectedDigit = { value: undefined, className: "" };
+import { GoHomeButton } from "@/features/go-home-button";
 
 export const LearnDigitsPage = () => {
-  const { speak } = useSpeechSynthesis();
-  const [selectedDigit, setSelectedDigit] = useState<{
-    value: DigitType | undefined;
-    className: string;
-  }>(() => initSelectedDigit);
+  const { openDialog } = useDialogs();
+  const { playDigit, stopDigit } = useDigitPlayer();
 
-  const handleDigitCardClick = (digit: DigitType) => {
-    speak(`${digit}`);
-    setSelectedDigit({ value: digit, className: s.digit_card_highlight });
-    setTimeout(() => {
-      setSelectedDigit(initSelectedDigit);
-    }, 300);
+  const handleDigitCardClick = async (digit: DigitType) => {
+    openDialog({
+      component: <DigitCard digit={digit} className={s.digit_card} />,
+      showCloseButton: false,
+      dialogClassName: s.dialog,
+      onClose: stopDigit,
+    });
+
+    playDigit(digit);
   };
-
   return (
-    <div>
-      <div className="mb-10 max-w-max">
+    <DigitsPageContainer>
+      <div className="mb-10 max-w-max flex gap-4">
+        <GoBackButton />
         <GoHomeButton />
       </div>
 
-      <DigitsGrid
-        selectedDigit={selectedDigit.value}
-        selectedDigitCardClassName={selectedDigit.className}
-        onCardClick={handleDigitCardClick}
-      />
-    </div>
+      <DigitsGrid onCardClick={handleDigitCardClick} />
+    </DigitsPageContainer>
   );
 };

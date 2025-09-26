@@ -1,0 +1,13 @@
+.root {
+  @media (width >= 64rem) {
+    margin-inline: auto;
+
+    &.vowel {
+      width: 37.5rem;
+    }
+
+    &.consonant {
+      width: 800px;
+    }
+  }
+}

@@ -36,6 +36,7 @@ export const UiDialog = ({
   onClose,
   showCloseButton = true,
   dialogClassName,
+  contentClassName,
 }: {
   children: ReactNode;
   initialState?: boolean;
@@ -47,6 +48,7 @@ export const UiDialog = ({
   onClose?: () => void;
   showCloseButton?: boolean;
   dialogClassName?: string;
+  contentClassName?: string;
 }) => {
   const [open, setOpen] = useState(initialState);
   const dialogContainer = useRef<HTMLElement | null>(null);
@@ -133,7 +135,7 @@ export const UiDialog = ({
             )}
           </div>
 
-          <div className={s.content}>{children}</div>
+          <div className={clsx(s.content, contentClassName)}>{children}</div>
         </div>
       </div>
     </UiPortal>

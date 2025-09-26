@@ -28,7 +28,7 @@
   justify-content: center;
 
   margin-inline-start: auto;
-  padding: 0.15rem;
+  padding: 0.15rem 0.5rem;
 
   svg {
     width: 2rem;
@@ -38,7 +38,7 @@
 }
 
 .content {
-  overflow-y: auto;
+  // overflow-y: auto;
   min-width: 18.75rem;
   max-height: calc(100dvh - 11rem);
 }

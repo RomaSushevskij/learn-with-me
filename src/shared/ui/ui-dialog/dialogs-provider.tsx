@@ -121,6 +121,7 @@ export const DialogsProvider = ({
             header={dialog.header}
             showCloseButton={dialog.showCloseButton}
             dialogClassName={dialog.dialogClassName}
+            contentClassName={dialog.contentClassName}
           >
             {dialog.component}
           </UiDialog>

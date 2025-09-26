@@ -1,8 +1,9 @@
 import React, { type DetailedHTMLProps, type HTMLAttributes } from "react";
-import { digitColors } from "../lib/digit-colors";
 
 import { UiCard } from "@/shared/ui/ui-card/ui-card";
-import type { DigitType } from "@/entities/digits";
+
+import { digitColors } from "../lib/digit-colors";
+import type { DigitType } from "../model/types";
 
 type DigitCardProps = Omit<
   DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>,

@@ -3,7 +3,7 @@
 
   aspect-ratio: 16/12;
   width: 100%;
-  max-width: 500px; /* ограничение ширины */
+  max-width: 400px; /* ограничение ширины */
 
   background-image: url("/public/images/logo.png");
   background-repeat: no-repeat;
@@ -11,13 +11,14 @@
   background-size: contain;
 }
 
-.menu {
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  row-gap: 1.25rem;
-  align-self: center;
-  justify-content: center;
+.go_back_button {
+  position: absolute;
+  top:1.875rem;
+  left: 1.875rem;
+}
 
-  width: 18.75rem;
+.go_home_button {
+  position: absolute;
+  top:1.875rem;
+  right: 1.875rem;
 }

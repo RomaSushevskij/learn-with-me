@@ -15,7 +15,7 @@ export const AppLayout = ({ children }: PropsWithChildren) => {
     new Image().src = "/images/error-image.jpg";
   }, []);
 
-  const padding = isMainPage ? undefined : "30";
+  const padding = "30";
 
   return (
     <UiFlex

@@ -4,7 +4,8 @@ import { shuffleArray } from "@/shared/lib/shuffle-array";
 import type { DigitType } from "@/entities/digits";
 import { getRandomRotation } from "@/shared/lib/get-random-rotation";
 
-import { DigitCard } from "./digit-card";
+import { DigitCard } from "./../digit-card";
+import s from "./digits-grid.module.scss";
 
 const generateDigits = () => {
   return shuffleArray<DigitType>(Array.from({ length: 10 }, (_, i) => (i + 1) as DigitType));
@@ -13,11 +14,9 @@ const generateDigits = () => {
 export const DigitsGrid = ({
   onCardClick,
   selectedDigit,
-  selectedDigitCardClassName,
 }: {
   onCardClick?: (digit: DigitType) => void;
   selectedDigit?: DigitType;
-  selectedDigitCardClassName?: string;
 }) => {
   const [digits] = useState<DigitType[]>(generateDigits);
 
@@ -29,17 +28,9 @@ export const DigitsGrid = ({
       digit={digit}
       style={{ transform: `rotate(${rotations[index]}deg)` }}
       onClick={() => onCardClick?.(digit)}
-      className={selectedDigit === digit ? selectedDigitCardClassName : ""}
+      className={selectedDigit === digit ? s.card_highlight : ""}
     />
   ));
 
-  return (
-    <div
-      className="grid gap-6 sm:gap-10
-      [grid-template-columns:repeat(auto-fit,minmax(6.25rem,1fr))]
-      [grid-template-rows:max-content]"
-    >
-      {cardElements}
-    </div>
-  );
+  return <div className={s.root}>{cardElements}</div>;
 };

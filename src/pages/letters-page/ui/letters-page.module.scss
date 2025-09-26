@@ -1,0 +1,10 @@
+.menu {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  row-gap: 1.25rem;
+  align-self: center;
+  justify-content: center;
+
+  width: 18.75rem;
+}

@@ -1,8 +1,14 @@
 import { useCallback, useState } from "react";
 
 import { UiFlexColumn, UiFlexRow } from "@/shared/ui/ui-flex";
-import { GoHomeButton } from "@/features/go-home-button";
-import { DigitCard, type DigitType, getRandomDigit, normalizeDigit } from "@/entities/digits";
+import { GoBackButton } from "@/features/go-back-button";
+import {
+  DigitCard,
+  DigitsPageContainer,
+  type DigitType,
+  getRandomDigit,
+  normalizeDigit,
+} from "@/entities/digits";
 import { UiMicrophoneButton } from "@/shared/ui/ui-microphone-button";
 import { getRandomRotation } from "@/shared/lib/get-random-rotation";
 import { useDialogs } from "@/shared/ui/ui-dialog";
@@ -11,14 +17,14 @@ import { Sounds } from "@/shared/lib/Sounds";
 import { UiErrorDialog } from "@/shared/ui/ui-error-dialog";
 import { type TVoskResultHandler, useVoskRu } from "@/shared/lib/hooks/use-vosk-ru";
 import { UiPageLoader } from "@/shared/ui/ui-page-loader";
+import { GoHomeButton } from "@/features/go-home-button";
 
 import s from "./say-digit-page.module.scss";
 import { MODEL_PATH } from "../constants/model-path";
 
 export const SayDigitPage = () => {
   const [targetDigit, setTargetDigit] = useState<{ value: DigitType; rotation: number }>(() => ({
-    // value: getRandomDigit(),
-    value: 8,
+    value: getRandomDigit(),
     rotation: getRandomRotation(),
   }));
 
@@ -108,14 +114,15 @@ export const SayDigitPage = () => {
   );
 
   return (
-    <UiFlexColumn className={s.root}>
+    <DigitsPageContainer className={s.root}>
       <UiFlexRow>
-        <div className="mb-10 max-w-max">
+        <div className="flex mb-10 max-w-max gap-4">
+          <GoBackButton />
           <GoHomeButton />
         </div>
       </UiFlexRow>
 
       {isModelInitialized ? pageContent : <UiPageLoader className="mt-10" />}
-    </UiFlexColumn>
+    </DigitsPageContainer>
   );
 };

@@ -1,0 +1,10 @@
+@import "/src/app/styles/mixins";
+
+.root {
+  @include responsive-grid;
+}
+
+.card_highlight {
+  @include card-highlight;
+}
+

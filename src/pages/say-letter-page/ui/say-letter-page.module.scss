@@ -1,0 +1,18 @@
+.root {
+  height: calc(100dvh - 1.25rem);
+}
+
+.main {
+  flex-grow: 1;
+}
+
+.digit_card {
+  aspect-ratio: 9/10;
+  width: 70%;
+  max-width: 12.5rem;
+  padding: 2rem;
+
+  * {
+    font-size: 9rem;
+  }
+}

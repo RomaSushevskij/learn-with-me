@@ -1,25 +1,31 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
-import { DigitsGrid, type DigitType, getRandomDigit } from "@/entities/digits";
-import { GoHomeButton } from "@/features/go-home-button";
+import {
+  DigitsGrid,
+  DigitsPageContainer,
+  type DigitType,
+  getRandomDigit,
+  useDigitPlayer,
+} from "@/entities/digits";
+import { GoBackButton } from "@/features/go-back-button";
 import { useDialogs } from "@/shared/ui/ui-dialog";
 import { UiSuccessDialog } from "@/shared/ui/ui-success-dialog";
 import { UiErrorDialog } from "@/shared/ui/ui-error-dialog";
 import { delay } from "@/shared/lib/delay";
 import { UiButton } from "@/shared/ui/ui-button";
 import { SpeakerIcon } from "@/shared/ui/icons/speaker-icon";
-import { useSpeechSynthesis } from "@/shared/lib/hooks/use-speech-synthesis";
 import { Sounds } from "@/shared/lib/Sounds";
+import { GoHomeButton } from "@/features/go-home-button";
 
-export const FindDigitPage: React.FC = () => {
+export const FindDigitPage = () => {
   const [targetDigit, setTargetDigit] = useState<DigitType>(() => getRandomDigit());
   const [cardsGridKey, setCardsGridKey] = useState(Math.random());
-  const { speak } = useSpeechSynthesis();
-
+  const speakerButtonRef = useRef<HTMLButtonElement | null>(null);
+  const { playRequestDigit } = useDigitPlayer();
   const dialogs = useDialogs();
 
-  const requestDigit = async (digit: number) => {
-    speak(`Покажи цифру ${digit}`);
+  const requestDigit = async (digit: DigitType) => {
+    playRequestDigit(digit);
   };
 
   const handleDigitCardClick = (digit: DigitType) => {
@@ -28,7 +34,10 @@ export const FindDigitPage: React.FC = () => {
     if (isSuccess) {
       const handleCloseDialogAfterSuccess = (dialogId: string) => {
         dialogs.closeDialog(dialogId);
-        const newTargetDigit = getRandomDigit();
+        let newTargetDigit = targetDigit;
+        while (newTargetDigit === targetDigit) {
+          newTargetDigit = getRandomDigit();
+        }
         setTargetDigit(newTargetDigit);
         requestDigit(newTargetDigit);
         setCardsGridKey(Math.random());
@@ -59,7 +68,6 @@ export const FindDigitPage: React.FC = () => {
       });
     }
   };
-  const speakerButtonRef = useRef<HTMLButtonElement | null>(null);
 
   useEffect(() => {
     delay(300).then(() => {
@@ -70,14 +78,20 @@ export const FindDigitPage: React.FC = () => {
   }, []);
 
   return (
-    <div className="flex flex-col">
-      <div className="flex gap-x-4 justify-between items-center mb-4 mb-10 sm:mx-10">
+    <DigitsPageContainer className="flex flex-col">
+      <div className="flex gap-x-4 items-center mb-10">
+        <GoBackButton />
         <GoHomeButton />
-        <UiButton withIcon ref={speakerButtonRef} onClick={() => requestDigit(targetDigit)}>
+        <UiButton
+          withIcon
+          ref={speakerButtonRef}
+          onClick={() => requestDigit(targetDigit)}
+          className="!ml-auto"
+        >
           <SpeakerIcon />
         </UiButton>
       </div>
       <DigitsGrid key={cardsGridKey} onCardClick={handleDigitCardClick} />
-    </div>
+    </DigitsPageContainer>
   );
 };

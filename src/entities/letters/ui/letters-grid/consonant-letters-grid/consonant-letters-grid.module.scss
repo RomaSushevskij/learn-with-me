@@ -1,0 +1,16 @@
+@import "/src/app/styles/mixins";
+
+.root {
+  @include responsive-grid(4.4rem,  1.5rem, 2.5rem);
+}
+
+.card_highlight {
+  @include card-highlight;
+}
+
+.card {
+  *{
+    font-size: 3.5rem;
+  }
+}
+
