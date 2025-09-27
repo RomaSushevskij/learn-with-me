@@ -1,9 +1,10 @@
 import type { ReactNode } from "react";
+import clsx from "clsx";
+
 import { GoBackButton } from "@/features/go-back-button";
 import { GoHomeButton } from "@/features/go-home-button";
 
 import s from "./navigation-layout.module.scss";
-import clsx from "clsx";
 
 export const NavigationLayout = ({
   children,

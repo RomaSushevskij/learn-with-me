@@ -1,23 +1,21 @@
-import { useDialogs } from "@/shared/ui/ui-dialog";
+import clsx from "clsx";
 
+import { useDialogs } from "@/shared/ui/ui-dialog";
 import {
   LetterCard,
   LettersGrid,
   LettersPageContainer,
   type LetterType,
-  useLetterCategory,
   useLetterPlayer,
 } from "@/entities/letters";
 import { GoBackButton } from "@/features/go-back-button";
 
-import s from "./learn-letters-page.module.scss";
-import clsx from "clsx";
 import { GoHomeButton } from "@/features/go-home-button";
+import s from "./learn-letters-page.module.scss";
 
 export const LearnLettersPage = () => {
   const { openDialog } = useDialogs();
   const { playLetter, stopLetter } = useLetterPlayer();
-  const { letterCategory } = useLetterCategory();
 
   const handleLetterCardClick = async (letter: LetterType) => {
     openDialog({
@@ -32,7 +30,7 @@ export const LearnLettersPage = () => {
 
   return (
     <LettersPageContainer>
-      <div className={clsx("flex gap-4", `${letterCategory === "vowel" ? "mb-10" : "mb-4"}`)}>
+      <div className={clsx("flex gap-4 mb-4")}>
         <GoBackButton />
         <GoHomeButton />
       </div>

@@ -26,7 +26,7 @@ export const LearnDigitsPage = () => {
   };
   return (
     <DigitsPageContainer>
-      <div className="mb-10 max-w-max flex gap-4">
+      <div className="mb-4 max-w-max flex gap-4">
         <GoBackButton />
         <GoHomeButton />
       </div>

@@ -10,9 +10,11 @@ import { useLetterCategory } from "../../lib/use-letter-category";
 export const LettersGrid = ({
   onCardClick,
   selectedLetter,
+  className,
 }: {
   onCardClick?: (letter: LetterType) => void;
   selectedLetter?: LetterType;
+  className?: string;
 }) => {
   const { letterCategory } = useLetterCategory();
 
@@ -21,6 +23,7 @@ export const LettersGrid = ({
       <VowelLettersGrid
         selectedLetter={selectedLetter as VowelLetterType}
         onCardClick={onCardClick}
+        className={className}
       />
     );
   }
@@ -29,6 +32,7 @@ export const LettersGrid = ({
     <ConsonantLettersGrid
       selectedLetter={selectedLetter as ConsonantsLetterType}
       onCardClick={onCardClick}
+      className={className}
     />
   );
 };

@@ -1,8 +1,21 @@
 .root {
+  display: flex;
+  flex-direction: column;
+
   height: 100dvh;
+  padding: 20px;
 
   background-image: url("public/images/bgc.svg");
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
+
+
+  @media (width >= 40rem) {
+    padding: 30px;
+
+  }
+
 }
+
+

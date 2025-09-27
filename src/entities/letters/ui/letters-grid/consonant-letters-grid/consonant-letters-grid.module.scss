@@ -2,6 +2,8 @@
 
 .root {
   @include responsive-grid(4.4rem,  1.5rem, 2.5rem);
+
+
 }
 
 .card_highlight {

@@ -79,7 +79,7 @@ export const FindDigitPage = () => {
 
   return (
     <DigitsPageContainer className="flex flex-col">
-      <div className="flex gap-x-4 items-center mb-10">
+      <div className="flex gap-x-4 items-center mb-4">
         <GoBackButton />
         <GoHomeButton />
         <UiButton

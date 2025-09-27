@@ -86,9 +86,7 @@ export const FindLetterPage = () => {
 
   return (
     <LettersPageContainer className="flex flex-col">
-      <div
-        className={clsx("flex gap-x-4 items-center", letterCategory === "vowel" ? "mb-10" : "mb-4")}
-      >
+      <div className={clsx("flex gap-x-4 items-center mb-4")}>
         <GoBackButton />
         <GoHomeButton />
         <UiButton

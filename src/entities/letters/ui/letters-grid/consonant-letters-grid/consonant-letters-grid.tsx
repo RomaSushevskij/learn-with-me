@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import clsx from "clsx";
 
 import { shuffleArray } from "@/shared/lib/shuffle-array";
 import { getRandomRotation } from "@/shared/lib/get-random-rotation";
@@ -15,9 +16,11 @@ const generateVowelLetters = () => {
 export const ConsonantLettersGrid = ({
   onCardClick,
   selectedLetter,
+  className,
 }: {
   onCardClick?: (digit: ConsonantsLetterType) => void;
   selectedLetter?: ConsonantsLetterType;
+  className?: string;
 }) => {
   const [digits] = useState<ConsonantsLetterType[]>(generateVowelLetters);
 
@@ -33,5 +36,5 @@ export const ConsonantLettersGrid = ({
     />
   ));
 
-  return <div className={s.root}>{cardElements}</div>;
+  return <div className={clsx(s.root, className)}>{cardElements}</div>;
 };
