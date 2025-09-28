@@ -9,7 +9,7 @@ export const UiFindCardTutorialDialog = ({
 }) => {
   return (
     <section className="flex flex-col items-center gap-y-8">
-      <p className="text-xl text-center text-balance">{message}</p>
+      <p className="text-2xl text-center text-balance">{message}</p>
       <UiButton onClick={onBtnClick}>Начать</UiButton>
     </section>
   );

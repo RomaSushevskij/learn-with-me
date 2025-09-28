@@ -16,8 +16,8 @@ import { useDialogs } from "@/shared/ui/ui-dialog";
 import { Sounds } from "@/shared/lib/Sounds";
 import { UiSuccessDialog } from "@/shared/ui/ui-success-dialog";
 import { UiErrorDialog } from "@/shared/ui/ui-error-dialog";
-import { delay } from "@/shared/lib/delay";
 import { GoHomeButton } from "@/features/go-home-button";
+import { UiFindCardTutorialDialog } from "@/shared/ui/ui-find-card-tutorial-dialog";
 
 export const FindLetterPage = () => {
   const { letterCategory } = useLetterCategory();
@@ -80,9 +80,22 @@ export const FindLetterPage = () => {
   };
 
   useEffect(() => {
-    delay(300).then(() => {
-      requestLetter(targetLetter);
-    });
+    setTimeout(() => {
+      const handleCloseTutorialDialog = (dialogId: string) => {
+        dialogs.closeDialog(dialogId);
+        requestLetter(targetLetter);
+      };
+      const dialogId = dialogs.openDialog({
+        component: (
+          <UiFindCardTutorialDialog
+            message={"Найди нужную букву и нажми на неё"}
+            onBtnClick={() => handleCloseTutorialDialog(dialogId)}
+          />
+        ),
+        showCloseButton: false,
+        persistent: true,
+      });
+    }, 0);
   }, []);
 
   return (
