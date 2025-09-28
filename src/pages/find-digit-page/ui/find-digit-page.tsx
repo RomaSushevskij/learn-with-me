@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 
 import {
   DigitsGrid,
@@ -11,7 +11,7 @@ import { GoBackButton } from "@/features/go-back-button";
 import { useDialogs } from "@/shared/ui/ui-dialog";
 import { UiSuccessDialog } from "@/shared/ui/ui-success-dialog";
 import { UiErrorDialog } from "@/shared/ui/ui-error-dialog";
-import { delay } from "@/shared/lib/delay";
+// import { delay } from "@/shared/lib/delay";
 import { UiButton } from "@/shared/ui/ui-button";
 import { SpeakerIcon } from "@/shared/ui/icons/speaker-icon";
 import { Sounds } from "@/shared/lib/Sounds";
@@ -69,13 +69,13 @@ export const FindDigitPage = () => {
     }
   };
 
-  useEffect(() => {
-    delay(300).then(() => {
-      if (speakerButtonRef.current !== null) {
-        speakerButtonRef.current.click();
-      }
-    });
-  }, []);
+  // useEffect(() => {
+  //   delay(300).then(() => {
+  //     if (speakerButtonRef.current !== null) {
+  //       speakerButtonRef.current.click();
+  //     }
+  //   });
+  // }, []);
 
   return (
     <DigitsPageContainer className="flex flex-col">
