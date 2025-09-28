@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import clsx from "clsx";
 
 import {
@@ -31,9 +31,12 @@ export const FindLetterPage = () => {
   const { playRequestLetter } = useLetterPlayer();
   const dialogs = useDialogs();
 
-  const requestLetter = async (letter: LetterType) => {
-    playRequestLetter(letter);
-  };
+  const requestLetter = useCallback(
+    async (letter: LetterType) => {
+      playRequestLetter(letter);
+    },
+    [playRequestLetter],
+  );
 
   const handleLetterCardClick = (letter: LetterType) => {
     const isSuccess = letter === targetLetter;
@@ -78,9 +81,7 @@ export const FindLetterPage = () => {
 
   useEffect(() => {
     delay(300).then(() => {
-      if (speakerButtonRef.current !== null) {
-        speakerButtonRef.current.click();
-      }
+      requestLetter(targetLetter);
     });
   }, []);
 

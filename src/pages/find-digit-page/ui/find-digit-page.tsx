@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import {
   DigitsGrid,
@@ -20,13 +20,16 @@ import { GoHomeButton } from "@/features/go-home-button";
 export const FindDigitPage = () => {
   const [targetDigit, setTargetDigit] = useState<DigitType>(() => getRandomDigit());
   const [cardsGridKey, setCardsGridKey] = useState(Math.random());
-  const speakerButtonRef = useRef<HTMLButtonElement | null>(null);
+
   const { playRequestDigit } = useDigitPlayer();
   const dialogs = useDialogs();
 
-  const requestDigit = async (digit: DigitType) => {
-    playRequestDigit(digit);
-  };
+  const requestDigit = useCallback(
+    async (digit: DigitType) => {
+      playRequestDigit(digit);
+    },
+    [playRequestDigit],
+  );
 
   const handleDigitCardClick = (digit: DigitType) => {
     const isSuccess = digit === targetDigit;
@@ -69,25 +72,19 @@ export const FindDigitPage = () => {
     }
   };
 
-  // useEffect(() => {
-  //   delay(300).then(() => {
-  //     if (speakerButtonRef.current !== null) {
-  //       speakerButtonRef.current.click();
-  //     }
-  //   });
-  // }, []);
+  useEffect(() => {
+    // delay(300).then(() => {
+    //   requestDigit(targetDigit);
+    // });
+    requestDigit(targetDigit);
+  }, []);
 
   return (
     <DigitsPageContainer className="flex flex-col">
       <div className="flex gap-x-4 items-center mb-4">
         <GoBackButton />
         <GoHomeButton />
-        <UiButton
-          withIcon
-          ref={speakerButtonRef}
-          onClick={() => requestDigit(targetDigit)}
-          className="!ml-auto"
-        >
+        <UiButton withIcon onClick={() => requestDigit(targetDigit)} className="!ml-auto">
           <SpeakerIcon />
         </UiButton>
       </div>
