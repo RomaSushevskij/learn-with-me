@@ -11,11 +11,11 @@ import { GoBackButton } from "@/features/go-back-button";
 import { useDialogs } from "@/shared/ui/ui-dialog";
 import { UiSuccessDialog } from "@/shared/ui/ui-success-dialog";
 import { UiErrorDialog } from "@/shared/ui/ui-error-dialog";
-// import { delay } from "@/shared/lib/delay";
 import { UiButton } from "@/shared/ui/ui-button";
 import { SpeakerIcon } from "@/shared/ui/icons/speaker-icon";
 import { Sounds } from "@/shared/lib/Sounds";
 import { GoHomeButton } from "@/features/go-home-button";
+import { UiFindCardTutorialDialog } from "@/shared/ui/ui-find-card-tutorial-dialog";
 
 export const FindDigitPage = () => {
   const [targetDigit, setTargetDigit] = useState<DigitType>(() => getRandomDigit());
@@ -73,10 +73,22 @@ export const FindDigitPage = () => {
   };
 
   useEffect(() => {
-    // delay(300).then(() => {
-    //   requestDigit(targetDigit);
-    // });
-    requestDigit(targetDigit);
+    setTimeout(() => {
+      const handleCloseTutorialDialog = (dialogId: string) => {
+        dialogs.closeDialog(dialogId);
+        requestDigit(targetDigit);
+      };
+      const dialogId = dialogs.openDialog({
+        component: (
+          <UiFindCardTutorialDialog
+            message={"Найди нужную цифру и нажми на неё"}
+            onBtnClick={() => handleCloseTutorialDialog(dialogId)}
+          />
+        ),
+        showCloseButton: false,
+        persistent: true,
+      });
+    }, 0);
   }, []);
 
   return (
