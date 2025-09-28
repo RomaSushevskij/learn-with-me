@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import {
   DigitsGrid,
@@ -11,7 +11,7 @@ import { GoBackButton } from "@/features/go-back-button";
 import { useDialogs } from "@/shared/ui/ui-dialog";
 import { UiSuccessDialog } from "@/shared/ui/ui-success-dialog";
 import { UiErrorDialog } from "@/shared/ui/ui-error-dialog";
-// import { delay } from "@/shared/lib/delay";
+import { delay } from "@/shared/lib/delay";
 import { UiButton } from "@/shared/ui/ui-button";
 import { SpeakerIcon } from "@/shared/ui/icons/speaker-icon";
 import { Sounds } from "@/shared/lib/Sounds";
@@ -20,13 +20,16 @@ import { GoHomeButton } from "@/features/go-home-button";
 export const FindDigitPage = () => {
   const [targetDigit, setTargetDigit] = useState<DigitType>(() => getRandomDigit());
   const [cardsGridKey, setCardsGridKey] = useState(Math.random());
-  const speakerButtonRef = useRef<HTMLButtonElement | null>(null);
+
   const { playRequestDigit } = useDigitPlayer();
   const dialogs = useDialogs();
 
-  const requestDigit = async (digit: DigitType) => {
-    playRequestDigit(digit);
-  };
+  const requestDigit = useCallback(
+    async (digit: DigitType) => {
+      playRequestDigit(digit);
+    },
+    [playRequestDigit],
+  );
 
   const handleDigitCardClick = (digit: DigitType) => {
     const isSuccess = digit === targetDigit;
@@ -69,25 +72,18 @@ export const FindDigitPage = () => {
     }
   };
 
-  // useEffect(() => {
-  //   delay(300).then(() => {
-  //     if (speakerButtonRef.current !== null) {
-  //       speakerButtonRef.current.click();
-  //     }
-  //   });
-  // }, []);
+  useEffect(() => {
+    delay(300).then(() => {
+      requestDigit(targetDigit);
+    });
+  }, []);
 
   return (
     <DigitsPageContainer className="flex flex-col">
       <div className="flex gap-x-4 items-center mb-4">
         <GoBackButton />
         <GoHomeButton />
-        <UiButton
-          withIcon
-          ref={speakerButtonRef}
-          onClick={() => requestDigit(targetDigit)}
-          className="!ml-auto"
-        >
+        <UiButton withIcon onClick={() => requestDigit(targetDigit)} className="!ml-auto">
           <SpeakerIcon />
         </UiButton>
       </div>
