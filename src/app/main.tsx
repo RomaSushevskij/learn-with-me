@@ -11,6 +11,16 @@ window.process = window.process || {};
 window.process.nextTick = (cb: (...args: unknown[]) => void, ...args: unknown[]) => {
   return setTimeout(() => cb(...args), 0);
 };
+if (!window.browser) {
+  window.browser = {
+    i18n: {
+      detectLanguage: async () => ({
+        languages: [{ language: "en", percentage: 100 }],
+      }),
+      getUILanguage: () => "en",
+    },
+  };
+}
 
 createRoot(document.getElementById("root")!).render(
   <DialogsProvider>
