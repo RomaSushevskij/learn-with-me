@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useState } from "react";
 import clsx from "clsx";
 
 import {
@@ -17,7 +17,6 @@ import { Sounds } from "@/shared/lib/Sounds";
 import { UiSuccessDialog } from "@/shared/ui/ui-success-dialog";
 import { UiErrorDialog } from "@/shared/ui/ui-error-dialog";
 import { GoHomeButton } from "@/features/go-home-button";
-import { UiFindCardTutorialDialog } from "@/shared/ui/ui-find-card-tutorial-dialog";
 
 export const FindLetterPage = () => {
   const { letterCategory } = useLetterCategory();
@@ -26,7 +25,6 @@ export const FindLetterPage = () => {
     getRandomLetter(letterCategory),
   );
   const [cardsGridKey, setCardsGridKey] = useState(Math.random());
-  const speakerButtonRef = useRef<HTMLButtonElement | null>(null);
 
   const { playRequestLetter } = useLetterPlayer();
   const dialogs = useDialogs();
@@ -79,36 +77,31 @@ export const FindLetterPage = () => {
     }
   };
 
-  useEffect(() => {
-    setTimeout(() => {
-      const handleCloseTutorialDialog = (dialogId: string) => {
-        dialogs.closeDialog(dialogId);
-        requestLetter(targetLetter);
-      };
-      const dialogId = dialogs.openDialog({
-        component: (
-          <UiFindCardTutorialDialog
-            message={"Найди нужную букву и нажми на неё"}
-            onBtnClick={() => handleCloseTutorialDialog(dialogId)}
-          />
-        ),
-        showCloseButton: false,
-        persistent: true,
-      });
-    }, 0);
-  }, []);
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     const handleCloseTutorialDialog = (dialogId: string) => {
+  //       dialogs.closeDialog(dialogId);
+  //       requestLetter(targetLetter);
+  //     };
+  //     const dialogId = dialogs.openDialog({
+  //       component: (
+  //         <UiFindCardTutorialDialog
+  //           message={"Найди нужную букву и нажми на неё"}
+  //           onBtnClick={() => handleCloseTutorialDialog(dialogId)}
+  //         />
+  //       ),
+  //       showCloseButton: false,
+  //       persistent: true,
+  //     });
+  //   }, 0);
+  // }, []);
 
   return (
     <LettersPageContainer className="flex flex-col">
       <div className={clsx("flex gap-x-4 items-center mb-4")}>
         <GoBackButton />
         <GoHomeButton />
-        <UiButton
-          className="!ml-auto"
-          withIcon
-          ref={speakerButtonRef}
-          onClick={() => requestLetter(targetLetter)}
-        >
+        <UiButton className="!ml-auto" withIcon onClick={() => requestLetter(targetLetter)}>
           <SpeakerIcon />
         </UiButton>
       </div>
