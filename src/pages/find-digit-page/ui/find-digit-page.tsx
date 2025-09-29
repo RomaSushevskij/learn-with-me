@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useState, useEffect } from "react";
 
 import {
   DigitsGrid,
@@ -15,6 +15,7 @@ import { UiButton } from "@/shared/ui/ui-button";
 import { SpeakerIcon } from "@/shared/ui/icons/speaker-icon";
 import { Sounds } from "@/shared/lib/Sounds";
 import { GoHomeButton } from "@/features/go-home-button";
+import { UiFindCardTutorialDialog } from "@/shared/ui/ui-find-card-tutorial-dialog";
 
 export const FindDigitPage = () => {
   const [targetDigit, setTargetDigit] = useState<DigitType>(() => getRandomDigit());
