@@ -71,24 +71,24 @@ export const FindDigitPage = () => {
     }
   };
 
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     const handleCloseTutorialDialog = (dialogId: string) => {
-  //       dialogs.closeDialog(dialogId);
-  //       requestDigit(targetDigit);
-  //     };
-  //     const dialogId = dialogs.openDialog({
-  //       component: (
-  //         <UiFindCardTutorialDialog
-  //           message={"Найди нужную цифру и нажми на неё"}
-  //           onBtnClick={() => handleCloseTutorialDialog(dialogId)}
-  //         />
-  //       ),
-  //       showCloseButton: false,
-  //       persistent: true,
-  //     });
-  //   }, 0);
-  // }, []);
+  useEffect(() => {
+    setTimeout(() => {
+      const handleCloseTutorialDialog = (dialogId: string) => {
+        dialogs.closeDialog(dialogId);
+        requestDigit(targetDigit);
+      };
+      const dialogId = dialogs.openDialog({
+        component: (
+          <UiFindCardTutorialDialog
+            message={"Найди нужную цифру и нажми на неё"}
+            onBtnClick={() => handleCloseTutorialDialog(dialogId)}
+          />
+        ),
+        showCloseButton: false,
+        persistent: true,
+      });
+    }, 0);
+  }, []);
 
   return (
     <DigitsPageContainer className="flex flex-col">

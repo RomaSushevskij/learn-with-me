@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import clsx from "clsx";
 
 import {
@@ -17,6 +17,7 @@ import { Sounds } from "@/shared/lib/Sounds";
 import { UiSuccessDialog } from "@/shared/ui/ui-success-dialog";
 import { UiErrorDialog } from "@/shared/ui/ui-error-dialog";
 import { GoHomeButton } from "@/features/go-home-button";
+import { UiFindCardTutorialDialog } from "@/shared/ui/ui-find-card-tutorial-dialog";
 
 export const FindLetterPage = () => {
   const { letterCategory } = useLetterCategory();
@@ -77,24 +78,24 @@ export const FindLetterPage = () => {
     }
   };
 
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     const handleCloseTutorialDialog = (dialogId: string) => {
-  //       dialogs.closeDialog(dialogId);
-  //       requestLetter(targetLetter);
-  //     };
-  //     const dialogId = dialogs.openDialog({
-  //       component: (
-  //         <UiFindCardTutorialDialog
-  //           message={"Найди нужную букву и нажми на неё"}
-  //           onBtnClick={() => handleCloseTutorialDialog(dialogId)}
-  //         />
-  //       ),
-  //       showCloseButton: false,
-  //       persistent: true,
-  //     });
-  //   }, 0);
-  // }, []);
+  useEffect(() => {
+    setTimeout(() => {
+      const handleCloseTutorialDialog = (dialogId: string) => {
+        dialogs.closeDialog(dialogId);
+        requestLetter(targetLetter);
+      };
+      const dialogId = dialogs.openDialog({
+        component: (
+          <UiFindCardTutorialDialog
+            message={"Найди нужную букву и нажми на неё"}
+            onBtnClick={() => handleCloseTutorialDialog(dialogId)}
+          />
+        ),
+        showCloseButton: false,
+        persistent: true,
+      });
+    }, 0);
+  }, []);
 
   return (
     <LettersPageContainer className="flex flex-col">
