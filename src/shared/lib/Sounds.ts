@@ -7,4 +7,8 @@ export const Sounds = {
     const audio = new Audio("/sounds/error-sound.mp3");
     audio.play().catch(() => {});
   },
+  playComplete: () => {
+    const audio = new Audio("/sounds/complete-sound.mp3");
+    audio.play().catch(() => {});
+  },
 };
