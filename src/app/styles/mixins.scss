@@ -6,7 +6,7 @@
   grid-template-rows: max-content;
   gap: $gap;
 
-  max-height: calc(100dvh - 1.25rem - 1.25rem - 3.3125rem - 1rem);
+  max-height: calc(100dvh - 1.25rem - 1.25rem - 3.3125rem - 1rem - 3.25rem);
   padding: 1rem 0.25rem 1rem 0.1rem;
 
   &::-webkit-scrollbar {

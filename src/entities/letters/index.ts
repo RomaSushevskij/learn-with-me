@@ -8,4 +8,5 @@ export { navigateToLearnLettersPage } from "./lib/navigate-to-learn-letters-page
 export { playLetter } from "./lib/play-letter";
 export { useLetterCategory } from "./lib/use-letter-category";
 export { useLetterPlayer } from "./lib/use-letter-player";
+export { useLettersGenerator } from "./lib/use-letters-generator";
 export { normalizeLetter } from "./lib/normalize-letter";

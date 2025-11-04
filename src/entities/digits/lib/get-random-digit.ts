@@ -1,5 +1,7 @@
-import type { DigitType } from "../model/types";
+import { DIGITS } from "@/entities/digits";
 
 export const getRandomDigit = () => {
-  return (Math.floor(Math.random() * 10) + 1) as DigitType;
+  const randomIndex = Math.floor(Math.random() * DIGITS.length);
+
+  return DIGITS[randomIndex];
 };

@@ -2,12 +2,11 @@ import { useCallback, useEffect, useState } from "react";
 import clsx from "clsx";
 
 import {
-  getRandomLetter,
   LettersGrid,
   LettersPageContainer,
   type LetterType,
-  useLetterCategory,
   useLetterPlayer,
+  useLettersGenerator,
 } from "@/entities/letters";
 import { GoBackButton } from "@/features/go-back-button";
 import { UiButton } from "@/shared/ui/ui-button";
@@ -18,37 +17,60 @@ import { UiSuccessDialog } from "@/shared/ui/ui-success-dialog";
 import { UiErrorDialog } from "@/shared/ui/ui-error-dialog";
 import { GoHomeButton } from "@/features/go-home-button";
 import { UiFindCardTutorialDialog } from "@/shared/ui/ui-find-card-tutorial-dialog";
+import { useNavigate } from "react-router-dom";
+import { routePath } from "@/shared/config/route-config";
+import { UiAwardDialog } from "@/shared/ui/ui-award-dialog";
+import { UiProgress } from "@/shared/ui/ui-progress";
 
 export const FindLetterPage = () => {
-  const { letterCategory } = useLetterCategory();
-
-  const [targetLetter, setTargetLetter] = useState<LetterType>(() =>
-    getRandomLetter(letterCategory),
-  );
-  const [cardsGridKey, setCardsGridKey] = useState(Math.random());
-
+  const navigate = useNavigate();
+  const { targetItem, updateTargetItem, removeItem, addRandomItems, progress } =
+    useLettersGenerator();
   const { playRequestLetter } = useLetterPlayer();
   const dialogs = useDialogs();
 
+  const [cardsGridKey, setCardsGridKey] = useState(Math.random());
+
   const requestLetter = useCallback(
-    async (letter: LetterType) => {
+    async (letter: LetterType | null) => {
+      if (letter === null) {
+        return;
+      }
       playRequestLetter(letter);
     },
     [playRequestLetter],
   );
 
+  const handleCompleted = () => {
+    const handleCloseDialog = async (dialogId: string) => {
+      dialogs.closeDialog(dialogId);
+      navigate(routePath.letters, { replace: true });
+    };
+    Sounds.playComplete();
+    const dialogId = dialogs.openDialog({
+      component: <UiAwardDialog onOkClick={() => handleCloseDialog(dialogId)} />,
+      showCloseButton: false,
+      persistent: true,
+      dialogClassName: "bg-amber-100",
+    });
+  };
+
   const handleLetterCardClick = (letter: LetterType) => {
-    const isSuccess = letter === targetLetter;
+    const isSuccess = letter === targetItem;
 
     if (isSuccess) {
       const handleCloseDialogAfterSuccess = (dialogId: string) => {
         dialogs.closeDialog(dialogId);
-        let newTargetLetter = targetLetter;
-        while (targetLetter === newTargetLetter) {
-          newTargetLetter = getRandomLetter(letterCategory);
+        const remainingItems = removeItem(targetItem);
+        const newTargetItem = updateTargetItem(remainingItems);
+
+        if (newTargetItem === null) {
+          handleCompleted();
+
+          return;
         }
-        setTargetLetter(newTargetLetter);
-        requestLetter(newTargetLetter);
+
+        requestLetter(newTargetItem);
         setCardsGridKey(Math.random());
       };
 
@@ -63,7 +85,12 @@ export const FindLetterPage = () => {
     } else {
       const handleCloseDialogAfterError = (dialogId: string) => {
         dialogs.closeDialog(dialogId);
-        requestLetter(targetLetter);
+
+        if (targetItem === null) {
+          return;
+        }
+        addRandomItems();
+        requestLetter(targetItem);
         setCardsGridKey(Math.random());
       };
 
@@ -82,7 +109,12 @@ export const FindLetterPage = () => {
     setTimeout(() => {
       const handleCloseTutorialDialog = (dialogId: string) => {
         dialogs.closeDialog(dialogId);
-        requestLetter(targetLetter);
+
+        if (targetItem === null) {
+          return;
+        }
+
+        requestLetter(targetItem);
       };
       const dialogId = dialogs.openDialog({
         component: (
@@ -102,10 +134,11 @@ export const FindLetterPage = () => {
       <div className={clsx("flex gap-x-4 items-center mb-4")}>
         <GoBackButton />
         <GoHomeButton />
-        <UiButton className="!ml-auto" withIcon onClick={() => requestLetter(targetLetter)}>
+        <UiButton className="!ml-auto" withIcon onClick={() => requestLetter(targetItem)}>
           <SpeakerIcon />
         </UiButton>
       </div>
+      <UiProgress progress={progress} />
       <LettersGrid key={cardsGridKey} onCardClick={handleLetterCardClick} />
     </LettersPageContainer>
   );
